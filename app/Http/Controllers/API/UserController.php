@@ -16,15 +16,15 @@ class UserController extends Controller
 {
     public function register(Request $request)
     {
-        try {
+        // try {
             $fields = $request->validate([
                 'name' => 'required|string|max:255',
                 'username' => 'required|string|max:255|unique:users,username',
                 'email' => 'required|string|email|max:255|unique:users,email',
                 'phone' => 'nullable|string|max:255',
-                'password' => ['required', 'string', 'max:255', 'confirmed', new Password],
+                'password' => 'required|string|confirmed|max:255|',
             ]);
-
+            
             User::create([
                 'name' => $fields['name'],
                 'username' => $fields['username'],
@@ -43,12 +43,12 @@ class UserController extends Controller
                 'user' => $user
             ], 'User Registered');
 
-        } catch (Exception $error) {
-            return ResponseFormatter::error([
-                'message' => 'Something went wrong',
-                'error' => $error
-            ], 'Authentication Failed', 500);
-        }
+        // } catch (Exception $error) {
+        //     return ResponseFormatter::error([
+        //         'message' => 'Something went wrong',
+        //         'error' => $error
+        //     ], 'Authentication Failed', 500);
+        // }
     }
 
     public function login(Request $request)
